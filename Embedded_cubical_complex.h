@@ -618,7 +618,7 @@ class Embedded_cubical_complex : public Gudhi::cubical_complex::Bitmap_cubical_c
             std::vector<double> _Values;
 
             _T.push_back(-std::numeric_limits<double>::infinity());
-            _Values.push_back(0);
+            _Values.push_back(0.0);
 
             std::vector<double> _singular_T;
             std::vector<double> _singular_values;
@@ -648,45 +648,43 @@ class Embedded_cubical_complex : public Gudhi::cubical_complex::Bitmap_cubical_c
             //Filling T with changing points and Values[i] = Radon(t) for all t \in [T[i],T[i+1]]
             //Last element of values should always be 0
             
-            std::size_t len = 0;
             int euler_car = 0;
             //We compute the euler characteristic values for intervals
             if(indices.size() > 0){ 
                 euler_car = ord_crit_val[index][indices[0]];
                 _T.push_back(scalar_pdt[indices[0]]);
                 _Values.push_back(euler_car);
+                std::cout << "_Values[0] = " << _Values[0] << std::endl;
                 for(std::size_t i = 1; i < indices.size(); i++){        
                     int crit_mul = ord_crit_val[index][indices[i]];
                     euler_car += crit_mul;
                     
                     if(std::abs(scalar_pdt[indices[i-1]] - scalar_pdt[indices[i]]) <= std::numeric_limits<double>::epsilon()){
-                        _Values[len] = _Values[len] + crit_mul;
+                        _Values[_Values.size()-1] = _Values[_Values.size()-1] + crit_mul;
                     }else{
                         _T.push_back(scalar_pdt[indices[i]]);
                         _Values.push_back(euler_car);
-                        len++;
                     }
                 }
             }
 
             //We compute the euler characteristic at singular points
             if(singular_indices.size() > 0){
-                len = 0;
                 _singular_T.push_back(singular_scalar_pdt[singular_indices[0]]);
                 _singular_values.push_back(cla_crit_val[index][singular_indices[0]]);
                 for(std::size_t i = 1; i < singular_indices.size(); i++){
                     int crit_mul = cla_crit_val[index][singular_indices[i]];
                     if(std::abs(singular_scalar_pdt[singular_indices[i-1]] - singular_scalar_pdt[singular_indices[i]]) <= std::numeric_limits<double>::epsilon()){
-                        _singular_values[len] = _singular_values[len] + crit_mul;
+                        _singular_values[_singular_values.size()-1] = _singular_values[_singular_values.size()-1] + crit_mul;
                     }else{
                         _singular_T.push_back(singular_scalar_pdt[singular_indices[i]]);
-                        len++;
-                        _singular_values.push_back(_Values[find_euler_car_index(_T,_singular_T[len],0,_T.size())] - cla_crit_val[index][singular_indices[len]]);
+                        _singular_values.push_back(_Values[find_euler_car_index(_T,_singular_T[_singular_T.size()-1],0,_T.size())] - cla_crit_val[index][singular_indices[singular_indices.size()-1]]);
                     }
                 }
             }
 
-            Radon_transform radon_transform(_T, _Values, singular_scalar_pdt, _singular_values);
+            std::cout << "_Values[0] = " << _Values[0] << std::endl;
+            Radon_transform radon_transform(_T, _Values, _singular_T, _singular_values);
             return radon_transform;
         }
 

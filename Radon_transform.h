@@ -49,75 +49,6 @@ class Radon_transform{
             singular_values = _singular_Values;
         }
    
-        /*
-        Radon_transform(Embedded_cubical_complex<Gudhi::cubical_complex::Bitmap_cubical_complex_base<double>> cplx, std::vector<double> direction){
-            int index = cplx.get_vector_index(direction);
-            int reverse_multiplicity = -1;
-
-            if(index >= (int)cplx.critical_vertices.size()){
-                reverse_multiplicity = -1;
-                index = (1 << direction.size()) - 1 - index;
-            }
-
-            std::vector<double> scalar_pdt;
-            std::vector<double> singular_scalar_pdt;
-
-            std::vector<std::size_t> indices;
-            std::vector<std::size_t> singular_indices;
-            
-            //Computing scalar products with non singular critical vertices
-            for(std::size_t i = 0; i < cplx.critical_vertices[index].size(); i++){
-                scalar_pdt.push_back(std::inner_product(direction.begin(), direction.end(), cplx.embedding[cplx.embedding_index[cplx.critical_vertices[index][i]]].begin(), 0.0));
-                indices.push_back(i);
-            }
-            //Computing scalar products with singular critical vertices
-            for(std::size_t i = 0; i < cplx.zero_measure_critical_vertices[index].size(); i++){
-                singular_scalar_pdt.push_back(std::inner_product(direction.begin(), direction.end(), cplx.embedding[cplx.embedding_index[cplx.zero_measure_critical_vertices[index][i]]].begin(), 0.0));
-                singular_indices.push_back(i);
-            }
-
-            std::sort(indices.begin(), indices.end(), [&scalar_pdt](int i, int j) {return scalar_pdt[i] < scalar_pdt[j];});
-            std::sort(singular_indices.begin(), singular_indices.end(), [&singular_scalar_pdt](int i, int j) {return singular_scalar_pdt[i] < singular_scalar_pdt[j];});
-            
-            //Filling T with changing points and Values[i] = Radon(t) for all t \in [T[i],T[i+1]]
-            //Last element of values should always be 0
-            std::size_t len = 0;
-            int euler_car = reverse_multiplicity * cplx.critical_multiplicity[index][indices[0]];
-            T.push_back(scalar_pdt[indices[0]]);
-            Values.push_back(euler_car);
-            for(std::size_t i = 1; i < indices.size(); i++){        
-                int crit_mul = reverse_multiplicity * cplx.critical_multiplicity[index][indices[i]];
-                euler_car += crit_mul;
-                
-                if(std::abs(scalar_pdt[indices[i-1]] - scalar_pdt[indices[i]]) <= std::numeric_limits<double>::epsilon()){
-                    Values[len] = Values[len] + crit_mul;
-                }else{
-                    T.push_back(scalar_pdt[indices[i]]);
-                    Values.push_back(euler_car);
-                    len++;
-                }
-            }
-
-            if(singular_indices.size() > 0){
-                len = 0;
-                singular_T.push_back(singular_scalar_pdt[singular_indices[0]]);
-                euler_car = Values[dichotomie(T,singular_T[0],0,T.size())];
-                singular_values.push_back(euler_car - cplx.zero_measure_critical_multiplicity[index][singular_indices[0]]);
-
-                for(std::size_t i = 1; i < singular_indices.size(); i++){        
-                    int crit_mul = cplx.zero_measure_critical_multiplicity[index][singular_indices[i]];
-
-                    if(std::abs(singular_scalar_pdt[indices[i-1]] - singular_scalar_pdt[singular_indices[i]]) <= std::numeric_limits<double>::epsilon()){
-                        singular_values[len] = singular_values[len] + crit_mul;
-                    }else{
-                        singular_T.push_back(singular_scalar_pdt[singular_indices[i]]);
-                        len++;
-                        singular_values.push_back(Values[dichotomie(T,singular_T[len],0,T.size())] - cplx.zero_measure_critical_multiplicity[index][singular_indices[len]]);
-                    }
-                }
-            }
-        }*/
-
         double evaluate(double t){
             bool is_value_critical = false;
             double val = get_singular_critical_value(t, &is_value_critical);
@@ -144,21 +75,6 @@ class Radon_transform{
 
             return result;
         }
-
-        /*
-        void print_exact_radon(){
-            std::cout << "T :\n";
-                print_vector(T);
-                std::cout << "Values :\n";
-                print_vector(Values);
-                std::cout << "\n";
-
-                std::cout << "singular_T :\n";
-                print_vector(singular_T);
-                std::cout << "singular_Values :\n";
-                print_vector(singular_values);
-                std::cout << "\n";
-        }*/
 };
 
 #endif //define RADON_TRANSFORM_H_
