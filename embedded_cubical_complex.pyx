@@ -25,6 +25,7 @@ cdef extern from "Embedded_cubical_complex_interface.h" namespace "Gudhi":
         void impose_lower_star_filtration() nogil
         void impose_upper_star_filtration() nogil
         void impose_lower_star_filtration_from_vertices() nogil
+        void impose_upper_star_filtration_from_vertices() nogil
 
         void preproc_hybrid_transform(int num_jobs) nogil
         void preproc_radon_transform(int num_jobs) nogil
@@ -128,6 +129,9 @@ cdef class EmbeddedComplex:
 
     def impose_lower_star_filtration_from_vertices(self):
         self.this_ptr.impose_lower_star_filtration_from_vertices()
+
+    def impose_upper_star_filtration_from_vertices(self):
+        self.this_ptr.impose_upper_star_filtration_from_vertices()
 
     def __dealloc__(self):
         if self.this_ptr != NULL:

@@ -84,12 +84,21 @@ class Embedded_cubical_complex : public Gudhi::cubical_complex::Bitmap_cubical_c
         }
 
         void impose_upper_star_filtration_from_simplex(Simplex_handle sh, double top_cell_filtration){
-            this->data[sh] = std::max(this->filtration(sh),top_cell_filtration);
+            this->data[sh] = std::min(this->filtration(sh),top_cell_filtration);
             if(this->dimension(sh) > 0){
                 std::vector<std::size_t> boundary = this->get_boundary_of_a_cell(sh);
                 for(std::size_t i=0; i<boundary.size(); i++){
                     //this->data[boundary[i]] = std::max(this->filtration(boundary[i]),this->filtration(sh));
                     impose_upper_star_filtration_from_simplex(boundary[i],top_cell_filtration);
+                }
+            }
+        }
+
+        void impose_upper_star_filtration_from_vertices(){
+            for(Simplex_handle sh = 0; sh < this->num_simplices(); sh++){
+                std::vector<int> neighbours = get_cell_vertices(sh);
+                for(std::size_t i=0; i<neighbours.size(); i++){
+                    this->data[sh] = std::min(this->filtration(sh),this->filtration(neighbours[i]));
                 }
             }
         }
