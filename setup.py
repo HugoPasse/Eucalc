@@ -6,8 +6,8 @@ from numpy import get_include as numpy_get_include
 libs = ["/usr/include"]
 
 setup(ext_modules = cythonize(Extension(
-        "embedded_cubical_complex",
-        sources=["embedded_cubical_complex.pyx"],
+        "eucalc",
+        sources=["eucalc.pyx"],
         language="c++",
         include_dirs = libs,
         extra_compile_args=["-std=c++2a"]
