@@ -7,7 +7,7 @@ libs = ["/usr/include"]
 
 setup(ext_modules = cythonize(Extension(
         "eucalc",
-        sources=["eucalc.pyx"],
+        sources=["src/eucalc.pyx"],
         language="c++",
         include_dirs = libs,
         extra_compile_args=["-std=c++2a"]
