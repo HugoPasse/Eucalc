@@ -1,17 +1,25 @@
 # Eucalc
 
-Eucalc is a C++ library that implements algorithms to compute hybrid transforms, Radon transform and Euler characteristic transform on cubical complexes. It can be used as an header library for C++ users, or can be compiled into a python module.
+**Authors:** H. Passe, V. Lebovici
+
+`Eucalc` is a `C++`\ `Python` library that implements algorithms to efficiently compute topological integral transforms (Euler characteristic transforms, Radon transforms and hybrid transforms) on cubical complexes. It can be used as a header library for `C++` users, or can be compiled into a `Python` module.
+
+This repository is associated with [our paper](https://arxiv.org/abs/2405.02256) with S. Oudot accepted in *Symposium on Experimental Algorithms (SEA) 2024*.
+
+Please find short usage tutorials in the notebooks of the `tutos` directory.
 
 ## Python module compilation
 
-To use our C++ code in python we use cython. To compile the module you will need the  [`Gudhi`](https://gudhi.inria.fr) library headers. You can find them by downloading the [`latest release of Gudhi`](https://gudhi.inria.fr/release/Gudhi-Release-3.8.0/). Once you've downloaded them, modify the file called `setup.py` :
+To use our `C++` code in `Python` we use `Cython`. To compile the module, we included the necessary headers from the [`GUDHI`](https://gudhi.inria.fr) library in `src/gudhi`. 
 
-```python
-libs = ["/your_path_to_gudhi"]
-```
- Then you can compile the module with :
+To compile `Eucalc`, open the main directory into a terminal and execute:
+
 ```
 python3 setup.py build_ext --inplace
 ```
 
-Don't forget to add `~/your_module.so` to your python path (use `export PYTHONPATH=~/your_module.so`) or to put the `your_module.so` file into you python's module directory.
+Then add `~/your_module.so` to your `Python` path with 
+```
+export PYTHONPATH=~/your_module.so
+```
+put the `your_module.so` file into you `Python`'s working directory.
