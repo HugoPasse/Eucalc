@@ -18,8 +18,8 @@ To compile `Eucalc`, open the main directory into a terminal and execute:
 python3 setup.py build_ext --inplace
 ```
 
-Then add `~/your_module.so` to your `Python` path with 
+Then add `~/eucalc.XXX.so` to your `Python` path with 
 ```
-export PYTHONPATH=~/your_module.so
+export PYTHONPATH=~/eucalc.XXX.so
 ```
-put the `your_module.so` file into you `Python`'s working directory.
+or put the `eucalc.XXX.so` file into you `Python`'s working directory.
