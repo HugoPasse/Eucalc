@@ -45,7 +45,7 @@ cdef extern from "Embedded_cubical_complex_interface.h" namespace "Gudhi":
 
         vector[double] get_vertex_coordinates(int index) nogil
         
-        void print_filtration() nogil
+        void print_weights() nogil
         void print_embedding() nogil
         vector[double] get_vertex_embedding() nogil
 

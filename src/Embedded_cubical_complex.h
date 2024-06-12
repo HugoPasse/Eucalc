@@ -350,7 +350,7 @@ class Embedded_cubical_complex : public Gudhi::cubical_complex::Bitmap_cubical_c
         }
 
         void print_filtration(){
-            std::clog << "Filtration : \n[";
+            std::clog << "Weights : \n[";
             for(int i=2*this->sizes[1]; i>=0; i--){
                 for(int j=0; j<(int)(2*this->sizes[0]+1); j++){
                     std::clog << this->filtration(j+i*(2*this->sizes[0]+1)) << ", ";
@@ -663,7 +663,6 @@ class Embedded_cubical_complex : public Gudhi::cubical_complex::Bitmap_cubical_c
                 euler_car = ord_crit_val[index][indices[0]];
                 _T.push_back(scalar_pdt[indices[0]]);
                 _Values.push_back(euler_car);
-                std::cout << "_Values[0] = " << _Values[0] << std::endl;
                 for(std::size_t i = 1; i < indices.size(); i++){        
                     int crit_mul = ord_crit_val[index][indices[i]];
                     euler_car += crit_mul;
@@ -692,7 +691,6 @@ class Embedded_cubical_complex : public Gudhi::cubical_complex::Bitmap_cubical_c
                 }
             }
 
-            std::cout << "_Values[0] = " << _Values[0] << std::endl;
             Radon_transform radon_transform(_T, _Values, _singular_T, _singular_values);
             return radon_transform;
         }
