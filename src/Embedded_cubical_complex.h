@@ -65,7 +65,7 @@ class Embedded_cubical_complex : public Gudhi::cubical_complex::Bitmap_cubical_c
 
                 initalize_embedding();
                 initalize_embedding_index();
-                //impose_upper_star_filtration();
+                impose_upper_star_filtration();
 
             }     
         

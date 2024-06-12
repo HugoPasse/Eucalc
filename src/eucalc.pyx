@@ -181,9 +181,8 @@ cdef class EmbeddedComplex:
 
     def compute_radon_transform(self, vector[double] direction):
         tmp = self.this_ptr.compute_radon_transform_python(direction)
-        radon = RadonTransform(tmp[0],tmp[1],tmp[2],tmp[3])
-        return radon
-
+        return RadonTransform(tmp[0],tmp[1],tmp[2],tmp[3])
+        
     def compute_euler_characteristic_transform(self, vector[double] direction):
         tmp = self.this_ptr.compute_ect_python(direction)
         ect = EulerCharacteristicTransform(tmp[0],tmp[1])
@@ -219,7 +218,7 @@ cdef class EmbeddedComplex:
     def get_vertex_embedding(self,int vertex):
         return self.this_ptr.get_vertex_coordinates(vertex)
 
-    def print_filtration(self):
+    def print_weights(self):
         self.this_ptr.print_filtration()
 
     def print_embedding(self):
